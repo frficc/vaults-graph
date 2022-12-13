@@ -7,6 +7,33 @@
     "0xadb7bac95560a54a10a6e7ef0de68195f540aa59": {
       "name": "Vault_wbnb_busd",
       "startBlock": 22480000
+    },
+    "0xddc223fed7e09f04a282464b0adcb160066f041c": {
+      "startBlock": 22679315
+    },
+    "0x74ddecda47923fe98a71f0dd5862dd39608721da": {
+      "startBlock": 22679565
+    },
+    "0xe4e5ce2cedd63f353d716863028914606ce84f96": {
+      "startBlock": 22680821
+    },
+    "0x4cdb26bd68fa5c554cfd1f9635bf60e26749a256": {
+      "startBlock": 22682532
+    },
+    "0x9e4b46061fa6b51d321d79fd24fbd3d45dfa344c": {
+      "startBlock": 22682372
+    },
+    "0x17079e1e2eab5922d2d19ccaa7cb79b2a9676eea": {
+      "startBlock": 22681578
+    },
+    "0xf032662e4be18385248178973725a7628e45082e": {
+      "startBlock": 22682641
+    },
+    "0x1ceffad9a001fb19aef11b2a9073cd601545a0a3": {
+      "startBlock": 22682885
+    },
+    "0x49193fe1bf25924b4786d9f42548f24fadb3c4fe": {
+      "startBlock": 22682755
     }
   }
 }

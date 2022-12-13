@@ -8,6 +8,12 @@ const Networks = {
   56: 'bsc',
 };
 
+const NetworkStartBlock = {
+  56: 21093570,
+};
+
+const MissedNetworksSet = new Set();
+
 const getContracts = async () => {
   const response = await fetch(`${autofarmApiUrl}/autofarm?$limit=200`);
   if (!response.ok) throw new Error('no response from vault config service');
@@ -20,32 +26,31 @@ const main = async () => {
   console.log('contracts fetched');
   const dataSources = [];
   contracts.forEach((contract) => {
-    const { vaultAddress, chainId } = contract;
+    const { vaultAddress, chainId, token, quoteToken } = contract;
+    if (MissedNetworksSet.has(chainId)) return;
     const network = Networks[chainId];
-    const addressConfig = addressesJson[chainId][vaultAddress];
-    if (!network) {
-      console.warn('no network of', chainId);
+    const networkAddresses = addressesJson[chainId];
+    if (!networkAddresses) {
+      console.warn('no config for', chainId, 'network');
+      MissedNetworksSet.add(chainId);
       return;
     }
-    if (!addressConfig) {
-      console.warn('no config of', vaultAddress);
-      return;
-    }
-    if (!addressConfig.startBlock) {
-      console.warn('no start block of', vaultAddress);
-      return;
-    }
+    const addressConfig = networkAddresses[vaultAddress];
+    const symbol = token.symbol.toLowerCase();
+    const quoteSymbol = quoteToken.symbol.toLowerCase();
+    const prefix = 'Vault';
+    const fallbackName =
+      symbol === quoteSymbol ? `${prefix}_${symbol}` : `${prefix}_${symbol}_${quoteSymbol}`;
     const template = yamlTemplate
-      .replace('{{name}}', addressConfig.name)
+      .replace('{{name}}', addressConfig?.name ?? fallbackName)
       .replace('{{network}}', network)
       .replace('{{address}}', vaultAddress)
-      .replace('{{startBlock}}', addressConfig.startBlock);
+      .replace('{{startBlock}}', addressConfig?.startBlock || NetworkStartBlock[chainId]);
     dataSources.push(template);
   });
   await fs.writeFile(
     './subgraph.yaml',
-    `
-specVersion: 0.0.5
+    `specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 dataSources:
