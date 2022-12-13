@@ -1,6 +1,6 @@
 import {
   Transfer as TransferEvent,
-} from "../generated/Vault/Vault"
+} from "../generated/Vault_Cake/Vault"
 import {
   Account, AccountToken,
   Balance,

@@ -2,7 +2,7 @@ import { newMockEvent } from "matchstick-as"
 import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
 import {
   Transfer,
-} from "../generated/Vault/Vault"
+} from "../generated/Vault_Cake/Vault"
 
 export function createTransferEvent(
   from: Address,
