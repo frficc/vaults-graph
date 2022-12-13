@@ -3,7 +3,7 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Vault_Cake
+    name: Vault
     network: bsc
     source:
       address: "0xdcae48ffdde7c388da3a7b2de36f61e20f1d8a39"
@@ -42,5 +42,3 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/vault.ts
-
-
