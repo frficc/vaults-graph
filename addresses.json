@@ -1,0 +1,12 @@
+{
+  "56": {
+    "0xdcae48ffdde7c388da3a7b2de36f61e20f1d8a39": {
+      "name": "Vault",
+      "startBlock": 21093570
+    },
+    "0xadb7bac95560a54a10a6e7ef0de68195f540aa59": {
+      "name": "Vault_wbnb_busd",
+      "startBlock": 22480000
+    }
+  }
+}

@@ -112,3 +112,4 @@ data/
 *.env
 build/
 generated/
+subgraph.yaml
