@@ -10,9 +10,11 @@
     "build": "graph build",
     "deploy:bsc": "graph deploy --node https://api.thegraph.com/deploy/ frficc/vaults-bsc",
     "deploy:matic": "graph deploy --node https://api.thegraph.com/deploy/ frficc/vaults-matic",
+    "deploy:ethereum": "graph deploy --node https://api.thegraph.com/deploy/ frficc/vaults-ethereum",
     "test": "graph test",
     "build-data": "cross-env CHAIN_ID=56 node scripts/build-data.js",
-    "build-data:matic": "cross-env CHAIN_ID=137 node scripts/build-data.js"
+    "build-data:matic": "cross-env CHAIN_ID=137 node scripts/build-data.js",
+    "build-data:ethereum": "cross-env CHAIN_ID=1 node scripts/build-data.js"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.36.1",

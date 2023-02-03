@@ -3,24 +3,26 @@ const addressesJson = require('../addresses.json');
 const fs = require('node:fs/promises');
 
 // const autofarmApiUrl = 'https://backend-api-prod.frfi.io';
-const autofarmApiUrl = 'https://backend-api-dev.frfi.io';
+const autofarmApiUrl = 'https://backend-api-dev.frfi.io/autofarm-config';
 
 const CHAIN_ID = process.env.CHAIN_ID;
 
 const Networks = {
   56: 'bsc',
   137: 'matic',
+  1: 'mainnet',
 };
 
 const NetworkStartBlock = {
   56: 21093570,
   137: 36291664,
+  1: 16533806,
 };
 
 const MissedNetworksSet = new Set();
 
 const getContracts = async () => {
-  const response = await fetch(`${autofarmApiUrl}/autofarm?$limit=200&chainId=${CHAIN_ID}`);
+  const response = await fetch(`${autofarmApiUrl}?$limit=200&chainId=${CHAIN_ID}`);
   if (!response.ok) throw new Error('no response from vault config service');
   return response.json().then((data) => data?.data);
 };
@@ -42,13 +44,17 @@ const main = async () => {
     }
     const addressConfig = networkAddresses[vaultAddress.toLowerCase()];
     if (!addressConfig) return;
-    const symbol = token.symbol.toLowerCase();
-    const quoteSymbol = quoteToken.symbol.toLowerCase();
-    const prefix = 'Vault';
-    const fallbackName =
-      symbol === quoteSymbol ? `${prefix}_${symbol}` : `${prefix}_${symbol}_${quoteSymbol}`;
+
+    let name = addressConfig?.name;
+    if (!name) {
+      const symbol = token.symbol.toLowerCase();
+      const quoteSymbol = quoteToken.symbol.toLowerCase();
+      const prefix = 'Vault';
+      name = symbol === quoteSymbol ? `${prefix}_${symbol}` : `${prefix}_${symbol}_${quoteSymbol}`;
+    }
+
     const template = yamlTemplate
-      .replace('{{name}}', addressConfig?.name ?? fallbackName)
+      .replace('{{name}}', name)
       .replace('{{network}}', network)
       .replace('{{address}}', vaultAddress)
       .replace('{{startBlock}}', addressConfig?.startBlock || NetworkStartBlock[chainId]);
